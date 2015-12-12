@@ -1,0 +1,26 @@
+#!/bin/sh
+
+FREEDOS_ISO_URL=http://ftp.gwdg.de/pub/misc/freedos/files/distributions/1.1/fd11src.iso
+
+
+TMPDIR=/tmp/freedos
+ISO_IMAGE_PATH=${TMPDIR}/fd.iso
+FREEDOS_DRIVE_C_PATH=${HOME}/.dosemu/drives/drive_c-freedos
+FILES_TO_EXTRACT="FREEDOS/SETUP/ODIN/KERNEL.SYS \
+                  FREEDOS/SETUP/ODIN/FDCONFIG.SYS \
+                  FREEDOS/SETUP/ODIN/COMMAND.COM"
+
+if [ -f ${ISO_IMAGE_PATH} ]
+then
+    echo FreeDOS ISO found
+else
+    echo Downloading FreeDOS...
+    mkdir -p "${TMPDIR}"
+    wget --quiet "${FREEDOS_ISO_URL}" -O "${ISO_IMAGE_PATH}"
+    echo Downloading done
+fi
+
+echo Extracting FreeDOS
+mkdir -p "${FREEDOS_DRIVE_C_PATH}"
+7z e "${ISO_IMAGE_PATH}" ${FILES_TO_EXTRACT} -o"${FREEDOS_DRIVE_C_PATH}" -y
+echo Extraction complete

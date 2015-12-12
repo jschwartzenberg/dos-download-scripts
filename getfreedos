@@ -1,0 +1,77 @@
+#!/bin/sh
+
+FREEDOS_BASE_URL=http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.1/repos/base
+FREEDOS_MAIN_FILES="command kernel"
+FREEDOS_TOOLS="assign attrib choice comp debug defrag deltree diskcomp diskcopy edit \
+exe2bin fc find format help label mem mode more move nansi replace share shsucdx \
+sort swsubst tree xcopy"
+
+TMP_DIR=/tmp/freedos-$USER
+FREEDOS_DRIVE_C_PATH=${HOME}/.dosemu/drives/drive_c-freedos
+DOSEMU_EXECUTABLE=`which dosemu`
+DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
+DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
+
+download_file()
+{
+  SOURCE=$1
+  DESTINATION=$2
+  if [ -f "$DESTINATION" ]
+  then
+    echo "$DESTINATION" found, not redownloading
+  else
+    echo Downloading "$SOURCE"...
+    wget --quiet "$SOURCE" -O "$DESTINATION"
+  fi
+}
+
+extract_7z()
+{
+  ARCHIVE="$1"
+  FILENAME="$2"
+  DESTINATION=$3
+  echo Extracting $FILENAME
+  7z e "$ARCHIVE" $FILENAME -o"$DESTINATION" -y -ssc- >/dev/null
+}
+
+extract_to_c()
+{
+  extract_7z "${TMP_DIR}"/"$1" "$2" ${FREEDOS_DRIVE_C_PATH}
+}
+extract_to_c_bin()
+{
+  extract_7z "${TMP_DIR}"/"$1" "$2" ${FREEDOS_DRIVE_C_PATH}/bin
+}
+extract_freedos_tools()
+{
+for tool in ${FREEDOS_TOOLS}
+do
+  extract_to_c_bin "$tool".zip bin/"${tool}".com
+  extract_to_c_bin "$tool".zip bin/"${tool}".exe
+  extract_to_c_bin "$tool".zip bin/"${tool}".sys
+done
+}
+
+download_archives()
+{
+echo Downloading FreeDOS...
+mkdir -p "${TMP_DIR}"
+for filename in ${FREEDOS_MAIN_FILES} ${FREEDOS_TOOLS}
+do
+  download_file "${FREEDOS_BASE_URL}"/"$filename".zip "${TMP_DIR}"/"$filename".zip
+done
+echo Downloading done
+}
+
+download_archives
+echo Extracting FreeDOS...
+mkdir -p "${FREEDOS_DRIVE_C_PATH}"/bin
+
+extract_to_c     "kernel.zip"  bin/kernl386.sys
+mv "${FREEDOS_DRIVE_C_PATH}"/kernl386.sys "${FREEDOS_DRIVE_C_PATH}"/kernel.sys
+extract_to_c     "command.zip" bin/command.com
+extract_to_c_bin "kernel.zip"  bin/sys.com
+
+extract_freedos_tools
+
+echo Extraction complete
