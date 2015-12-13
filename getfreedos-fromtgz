@@ -1,0 +1,35 @@
+#!/bin/sh
+
+FREEDOS_BASE_URL=http://downloads.sourceforge.net/project/dosemu/dosemu-freedos/1.0
+FREEDOS_TGZ_FILE=dosemu-freedos-1.0-bin.tgz
+FREEDOS_TGZ_URL="${FREEDOS_BASE_URL}"/"${FREEDOS_TGZ_FILE}"
+
+TMP_DIR=/tmp/freedos-$USER
+DRIVE_C="$1"
+
+download_file()
+{
+  SOURCE=$1
+  DESTINATION=$2
+  if [ -f "$DESTINATION" ]
+  then
+    echo "$DESTINATION" found, not redownloading
+  else
+    echo Downloading "$SOURCE"...
+    wget --quiet "$SOURCE" -O "$DESTINATION"
+  fi
+}
+
+download_archives()
+{
+  echo Downloading FreeDOS...
+  mkdir -p "${TMP_DIR}"
+  download_file ${FREEDOS_TGZ_URL} "${TMP_DIR}"/${FREEDOS_TGZ_FILE}
+  echo Downloading done
+}
+
+download_archives
+echo Extracting FreeDOS...
+mkdir -p "${DRIVE_C}"/bin
+tar --extract --gzip --file="${TMP_DIR}"/${FREEDOS_TGZ_FILE} --strip-components=2 --directory="${DRIVE_C}" --exclude=config.sys --exclude=autoexec.bat
+echo Extraction complete
