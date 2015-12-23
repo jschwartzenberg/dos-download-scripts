@@ -3,6 +3,7 @@
 FREEDOS_BASE_URL=http://downloads.sourceforge.net/project/dosemu/dosemu-freedos/1.0
 FREEDOS_TGZ_FILE=dosemu-freedos-1.0-bin.tgz
 FREEDOS_TGZ_URL="${FREEDOS_BASE_URL}"/"${FREEDOS_TGZ_FILE}"
+FILES_TO_SKIP="config.sys autoexec.bat"
 
 TMP_DIR=/tmp/freedos-$USER
 DRIVE_C="$1"
@@ -31,5 +32,10 @@ download_archives()
 download_archives
 echo Extracting FreeDOS...
 mkdir -p "${DRIVE_C}"/bin
-tar --extract --gzip --file="${TMP_DIR}"/${FREEDOS_TGZ_FILE} --strip-components=2 --directory="${DRIVE_C}" --exclude=config.sys --exclude=autoexec.bat
+TAR_ARGS=""
+for filename in ${FILES_TO_SKIP}
+do
+  TAR_ARGS="$TAR_ARGS --exclude=$filename"
+done
+tar --extract --gzip --file="${TMP_DIR}"/${FREEDOS_TGZ_FILE} --strip-components=2 --directory="${DRIVE_C}" $TAR_ARGS
 echo Extraction complete
