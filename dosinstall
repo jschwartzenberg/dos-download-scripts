@@ -1,0 +1,29 @@
+#!/bin/sh
+
+DOS_VERSIONS="freedos11 freedos11_fromiso freedos10_fromtgz"
+
+GETOPT=`getopt --name "test" \
+        --longoptions help,list \
+        --options h,l \
+        -- "$@"`
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+eval set -- "$GETOPT"
+
+while true;
+do
+  case "$1" in
+    --help)
+      echo Call "$0" with:
+      echo --list	List available DOS versions
+      break;;
+    --list)
+      for dos_version in ${DOS_VERSIONS}
+      do
+        echo $dos_version
+      done
+      break;;
+    *)
+      echo "Error try $0 --help"
+      break;;
+  esac
+done
