@@ -1,0 +1,47 @@
+#!/bin/sh
+
+DISKS_BASE_URL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip
+DISK1=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FMicrosoft%20MS-DOS%20v6.22%20%281994%29%28Microsoft%29%28Disk%201%20of%203%29.zip
+DISK2=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FMicrosoft%20MS-DOS%20v6.22%20%281994%29%28Microsoft%29%28Disk%202%20of%203%29.zip
+DISK3=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FMicrosoft%20MS-DOS%20v6.22%20%281994%29%28Microsoft%29%28Disk%203%20of%203%29.zip
+
+TMP_DIR=/tmp/msdos622-$USER
+
+DRIVE_C="$1"
+DOSEMU_EXECUTABLE=`which dosemu`
+DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
+DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
+
+download_file()
+{
+  SOURCE=$1
+  DESTINATION=$2
+  if [ -f "$DESTINATION" ]
+  then
+    echo "$DESTINATION" found, not redownloading
+  else
+    echo Downloading "$SOURCE"...
+    wget --quiet "$SOURCE" -O "$DESTINATION"
+  fi
+}
+
+extract_7z()
+{
+  ARCHIVE="$1"
+  FILENAME="$2"
+  DESTINATION=$3
+  echo Extracting $FILENAME
+  7z e "$ARCHIVE" $FILENAME -o"$DESTINATION" -y -ssc- >/dev/null
+}
+
+mkdir -p "${TMP_DIR}"/ex
+download_file "${DISKS_BASE_URL}"/"${DISK1}" "${TMP_DIR}"/disk1.zip
+download_file "${DISKS_BASE_URL}"/"${DISK2}" "${TMP_DIR}"/disk2.zip
+download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk3.zip
+
+extract_7z "${TMP_DIR}"/disk1.zip "" "${TMP_DIR}"/ex
+extract_7z "${TMP_DIR}"/disk2.zip "" "${TMP_DIR}"/ex
+extract_7z "${TMP_DIR}"/disk3.zip "" "${TMP_DIR}"/ex
+extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" IO.SYS ${DRIVE_C}
+extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" MSDOS.SYS ${DRIVE_C}
+extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" COMMAND.COM ${DRIVE_C}
