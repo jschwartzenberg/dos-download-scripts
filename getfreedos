@@ -12,36 +12,9 @@ DOSEMU_EXECUTABLE=`which dosemu`
 DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
 DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
-download_file()
-{
-  SOURCE=$1
-  DESTINATION=$2
-  if [ -f "$DESTINATION" ]
-  then
-    echo "$DESTINATION" found, not redownloading
-  else
-    echo Downloading "$SOURCE"...
-    wget --quiet "$SOURCE" -O "$DESTINATION"
-  fi
-}
+. ./include/download.sh
+. ./include/extract.sh
 
-extract_7z()
-{
-  ARCHIVE="$1"
-  FILENAME="$2"
-  DESTINATION=$3
-  echo Extracting $FILENAME
-  7z e "$ARCHIVE" $FILENAME -o"$DESTINATION" -y -ssc- >/dev/null
-}
-
-extract_to_c()
-{
-  extract_7z "${TMP_DIR}"/"$1" "$2" ${DRIVE_C}
-}
-extract_to_c_bin()
-{
-  extract_7z "${TMP_DIR}"/"$1" "$2" ${DRIVE_C}/bin
-}
 extract_freedos_tools()
 {
 for tool in ${FREEDOS_TOOLS}

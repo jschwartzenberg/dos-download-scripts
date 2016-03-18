@@ -12,36 +12,25 @@ DOSEMU_EXECUTABLE=`which dosemu`
 DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
 DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
-download_file()
-{
-  SOURCE=$1
-  DESTINATION=$2
-  if [ -f "$DESTINATION" ]
-  then
-    echo "$DESTINATION" found, not redownloading
-  else
-    echo Downloading "$SOURCE"...
-    wget --quiet "$SOURCE" -O "$DESTINATION"
-  fi
-}
-
-extract_7z()
-{
-  ARCHIVE="$1"
-  FILENAME="$2"
-  DESTINATION=$3
-  echo Extracting $FILENAME
-  7z e "$ARCHIVE" $FILENAME -o"$DESTINATION" -y -ssc- >/dev/null
-}
+. ./include/download.sh
+. ./include/extract.sh
 
 mkdir -p "${TMP_DIR}"/ex
 download_file "${DISKS_BASE_URL}"/"${DISK1}" "${TMP_DIR}"/disk1.zip
 download_file "${DISKS_BASE_URL}"/"${DISK2}" "${TMP_DIR}"/disk2.zip
 download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk3.zip
 
-extract_7z "${TMP_DIR}"/disk1.zip "" "${TMP_DIR}"/ex
-extract_7z "${TMP_DIR}"/disk2.zip "" "${TMP_DIR}"/ex
-extract_7z "${TMP_DIR}"/disk3.zip "" "${TMP_DIR}"/ex
-extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" IO.SYS ${DRIVE_C}
-extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" MSDOS.SYS ${DRIVE_C}
-extract_7z "${TMP_DIR}"/ex/"Microsoft MS-DOS v6.22 (1994)(Microsoft)(Disk 1 of 3).ima" COMMAND.COM ${DRIVE_C}
+extract_7z "${TMP_DIR}"/disk1.zip "" "${TMP_DIR}"/ex1
+extract_7z "${TMP_DIR}"/disk2.zip "" "${TMP_DIR}"/ex2
+extract_7z "${TMP_DIR}"/disk3.zip "" "${TMP_DIR}"/ex3
+IMAGE1="ex1/`ls \"${TMP_DIR}\"/ex1/`"
+IMAGE2="ex2/`ls \"${TMP_DIR}\"/ex2/`"
+IMAGE3="ex3/`ls \"${TMP_DIR}\"/ex3/`"
+
+extract_to_c "$IMAGE1" io.sys
+extract_to_c "$IMAGE1" msdos.sys
+extract_to_c "$IMAGE1" command.com
+extract_to_c_bin "$IMAGE1" expand.exe
+extract_to_c_bin "$IMAGE1" ega.cp_
+extract_to_c_bin "$IMAGE2" display.sy_
+extract_to_c_bin "$IMAGE2" mode.co_

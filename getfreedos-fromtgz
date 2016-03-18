@@ -8,18 +8,7 @@ FILES_TO_SKIP="config.sys autoexec.bat"
 TMP_DIR=/tmp/freedos-$USER
 DRIVE_C="$1"
 
-download_file()
-{
-  SOURCE=$1
-  DESTINATION=$2
-  if [ -f "$DESTINATION" ]
-  then
-    echo "$DESTINATION" found, not redownloading
-  else
-    echo Downloading "$SOURCE"...
-    wget --quiet "$SOURCE" -O "$DESTINATION"
-  fi
-}
+. ./include/download.sh
 
 download_archives()
 {
