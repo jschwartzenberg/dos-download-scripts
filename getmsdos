@@ -17,7 +17,7 @@ DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 . ./include/download.sh
 . ./include/extract.sh
 
-mkdir -p "${TMP_DIR}"/ex
+mkdir -p "${TMP_DIR}"
 download_file "${DISKS_BASE_URL}"/"${DISK1}" "${TMP_DIR}"/disk1.zip
 download_file "${DISKS_BASE_URL}"/"${DISK2}" "${TMP_DIR}"/disk2.zip
 download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk3.zip
