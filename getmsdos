@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# requires msexpand, renamed version of test/expand from libmspack
+
 DISKS_BASE_URL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip
 DISK1=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FMicrosoft%20MS-DOS%20v6.22%20%281994%29%28Microsoft%29%28Disk%201%20of%203%29.zip
 DISK2=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FMicrosoft%20MS-DOS%20v6.22%20%281994%29%28Microsoft%29%28Disk%202%20of%203%29.zip
@@ -30,7 +32,15 @@ IMAGE3="ex3/`ls \"${TMP_DIR}\"/ex3/`"
 extract_to_c "$IMAGE1" io.sys
 extract_to_c "$IMAGE1" msdos.sys
 extract_to_c "$IMAGE1" command.com
-extract_to_c_bin "$IMAGE1" expand.exe
-extract_to_c_bin "$IMAGE1" ega.cp_
-extract_to_c_bin "$IMAGE2" display.sy_
-extract_to_c_bin "$IMAGE2" mode.co_
+#extract_to_c_bin "$IMAGE1" expand.exe
+
+mkdir -p ${DRIVE_C}/bin
+
+extract_7z "${TMP_DIR}"/"$IMAGE1" ega.cp_ "${TMP_DIR}"
+msexpand "${TMP_DIR}"/EGA.CP_ ${DRIVE_C}/bin/ega.cpi
+
+extract_7z "${TMP_DIR}"/"$IMAGE1" DISPLAY.SY_ "${TMP_DIR}"
+msexpand "${TMP_DIR}"/EGA.CP_ ${DRIVE_C}/bin/display.sys
+
+extract_7z "${TMP_DIR}"/"$IMAGE1" MODE.CO_ "${TMP_DIR}"
+msexpand "${TMP_DIR}"/EGA.CP_ ${DRIVE_C}/bin/mode.com
