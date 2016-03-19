@@ -1,3 +1,8 @@
+if [ ! `which wget` ] ; then
+  echo Please install wget and make sure that wget is on your PATH
+  exit 1
+fi
+
 download_file()
 {
   SOURCE=$1
@@ -10,4 +15,3 @@ download_file()
     wget --quiet "$SOURCE" -O "$DESTINATION"
   fi
 }
-

@@ -1,3 +1,8 @@
+if [ ! `which 7z` ] ; then
+  echo Please install 7zip and make sure that 7z is on your PATH
+  exit 1
+fi
+
 extract_7z()
 {
   ARCHIVE="$1"
