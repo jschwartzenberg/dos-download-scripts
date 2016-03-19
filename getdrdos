@@ -1,0 +1,38 @@
+#!/bin/sh
+
+DISKS_BASE_URL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip
+DISK1=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%201%20of%205%29.zip
+DISK2=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%202%20of%205%29.zip
+DISK3=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%203%20of%205%29.zip
+DISK4=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%204%20of%205%29.zip
+DISK5=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%205%20of%205%29.zip
+
+TMP_DIR=/tmp/drdos703-$USER
+
+DRIVE_C="$1"
+
+. ./include/download.sh
+. ./include/extract.sh
+
+mkdir -p "${TMP_DIR}"
+download_file "${DISKS_BASE_URL}"/"${DISK1}" "${TMP_DIR}"/disk1.zip
+download_file "${DISKS_BASE_URL}"/"${DISK2}" "${TMP_DIR}"/disk2.zip
+download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk3.zip
+download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk4.zip
+download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk5.zip
+
+extract_7z "${TMP_DIR}"/disk1.zip "" "${TMP_DIR}"/ex1
+extract_7z "${TMP_DIR}"/disk2.zip "" "${TMP_DIR}"/ex2
+extract_7z "${TMP_DIR}"/disk3.zip "" "${TMP_DIR}"/ex3
+extract_7z "${TMP_DIR}"/disk4.zip "" "${TMP_DIR}"/ex4
+extract_7z "${TMP_DIR}"/disk5.zip "" "${TMP_DIR}"/ex5
+
+IMAGE1="ex1/`ls \"${TMP_DIR}\"/ex1/`"
+IMAGE2="ex2/`ls \"${TMP_DIR}\"/ex2/`"
+IMAGE3="ex3/`ls \"${TMP_DIR}\"/ex3/`"
+IMAGE4="ex4/`ls \"${TMP_DIR}\"/ex4/`"
+IMAGE5="ex5/`ls \"${TMP_DIR}\"/ex5/`"
+
+extract_to_c "$IMAGE1" ibmbio.com
+extract_to_c "$IMAGE1" ibmdos.com
+extract_to_c "$IMAGE1" command.com
