@@ -1,0 +1,19 @@
+#!/bin/sh
+
+IMGURL="http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip/IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%20Applications%%20-%%20%%5BIMA%%5D%%20%%28TOSEC-v2011-01-06_CM%%29%%2FCorel%%20Draw%%20V1.2%%20for%%20Windows%%203.0%%20%%281989%%29%%28Corel%%29%%28Disk%%20%d%%20of%%207%%29.zip"
+IMGCNT=7
+
+. ./include/download.sh
+. ./include/extract.sh
+
+TMP_DIR=/tmp/coreldraw12-$USER
+
+mkdir $TMP_DIR
+for i in $(seq 1 "$IMGCNT")
+do
+  download_file "`printf "$IMGURL" "$i"`" $TMP_DIR/disk$i.zip
+  mkdir $TMP_DIR/ex$i
+  extract_7z $TMP_DIR/disk$i.zip "" $TMP_DIR/ex$i
+  IMAGE="${TMP_DIR}/ex$i/`ls \"${TMP_DIR}\"/ex$i/`"
+  mcopy -sn -i "$IMAGE" ::* $1
+done
