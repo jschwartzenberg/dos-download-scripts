@@ -3,17 +3,8 @@
 IMGURL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip/IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%20Applications%%20-%%20%%5BIMA%%5D%%20%%28TOSEC-v2011-01-06_CM%%29%%2FWordPerfect%%20v5.1%%20for%%20DOS%%20%%281989%%29%%28WordPerfect%%20Corp%%29%%28Disk%%20%d%%20of%%206%%29.zip
 IMGCNT=6
 
-. ./include/download.sh
-. ./include/extract.sh
+. ./include/diskimage_download+extract.sh
 
 TMP_DIR=/tmp/wp51-$USER
 
-mkdir $TMP_DIR
-for i in $(seq 1 "$IMGCNT")
-do
-  download_file "`printf "$IMGURL" "$i"`" $TMP_DIR/disk$i.zip
-  mkdir $TMP_DIR/ex$i
-  extract_7z $TMP_DIR/disk$i.zip "" $TMP_DIR/ex$i
-  IMAGE="${TMP_DIR}/ex$i/`ls \"${TMP_DIR}\"/ex$i/`"
-  mcopy -sn -i "$IMAGE" ::* $1
-done
+download_and_extract "$IMGURL" "$IMGCNT" "$1"
