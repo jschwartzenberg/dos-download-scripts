@@ -1,0 +1,18 @@
+#!/bin/sh
+
+IMGURL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip/IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%20Operating%%20Systems%%20-%%20%%5BIMA%%5D%%20%%28TOSEC-v2011-01-06_CM%%29%%2FIBM%%20PC%%20Dos%%202000%%20%%281998%%29%%28IBM%%29%%28Disk%%20%d%%20of%%206%%29.zip
+IMGCNT=1
+#IMGCNT=6
+
+. ./include/diskimage_download+extract.sh
+
+TMP_DIR=/tmp/pcdos2k-$USER
+INST_DIR=$TMP_DIR/inst
+
+mkdir -p $INST_DIR
+download_and_extract "$IMGURL" "$IMGCNT" $INST_DIR
+
+mkdir -p "$1"
+cp $INST_DIR/IBMBIO.COM "$1"
+cp $INST_DIR/IBMDOS.COM "$1"
+cp $INST_DIR/COMMAND.COM "$1"
