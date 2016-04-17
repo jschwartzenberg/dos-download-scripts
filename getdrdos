@@ -1,46 +1,25 @@
 #!/bin/sh
 
 DISKS_BASE_URL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Compatibles_TOSEC_2012_04_23.zip
-# Below is DR-DOS 7.02
-#DISK1=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%201%20of%205%29.zip
-#DISK2=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%202%20of%205%29.zip
-#DISK3=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%203%20of%205%29.zip
-#DISK4=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%204%20of%205%29.zip
-#DISK5=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.02%20%281998%29%28Caldera%29%28Disk%205%20of%205%29.zip
+# DR-DOS 7.02
+#IMG=IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%20Operating%%20Systems%%20-%%20%%5BIMA%%5D%%20%%28TOSEC-v2011-01-06_CM%%29%%2FCaldera%%20DR-DOS%%20v7.02%%20%%281998%%29%%28Caldera%%29%%28Disk%%20%d%%20of%%205%%29.zip
 
 # DR-DOS 7.03
-DISK1=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.03%20%281998%29%28Caldera%20Systems%29%28Disk%201%20of%205%29.zip
-DISK2=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.03%20%281998%29%28Caldera%20Systems%29%28Disk%202%20of%205%29.zip
-DISK3=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.03%20%281998%29%28Caldera%20Systems%29%28Disk%203%20of%205%29.zip
-DISK4=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.03%20%281998%29%28Caldera%20Systems%29%28Disk%204%20of%205%29.zip
-DISK5=IBM%20PC%20Compatibles%20%5BTOSEC%5D%2FIBM%20PC%20Compatibles%20-%20Operating%20Systems%20-%20%5BIMA%5D%20%28TOSEC-v2011-01-06_CM%29%2FCaldera%20DR-DOS%20v7.03%20%281998%29%28Caldera%20Systems%29%28Disk%205%20of%205%29.zip
+IMG=IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%20Operating%%20Systems%%20-%%20%%5BIMA%%5D%%20%%28TOSEC-v2011-01-06_CM%%29%%2FCaldera%%20DR-DOS%%20v7.03%%20%%281998%%29%%28Caldera%%20Systems%%29%%28Disk%%20%d%%20of%%205%%29.zip
+
+IMGCNT=1
+#IMGCNT=5
+
+. ./include/diskimage_download+extract.sh
 
 TMP_DIR=/tmp/drdos703-$USER
-
+INST_DIR=$TMP_DIR/inst
 DRIVE_C="$1"
 
-. ./include/download.sh
-. ./include/extract.sh
+mkdir -p $INST_DIR
+download_and_extract "${DISKS_BASE_URL}"/"$IMG" "$IMGCNT" $INST_DIR
 
-mkdir -p "${TMP_DIR}"
-download_file "${DISKS_BASE_URL}"/"${DISK1}" "${TMP_DIR}"/disk1.zip
-download_file "${DISKS_BASE_URL}"/"${DISK2}" "${TMP_DIR}"/disk2.zip
-download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk3.zip
-download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk4.zip
-download_file "${DISKS_BASE_URL}"/"${DISK3}" "${TMP_DIR}"/disk5.zip
-
-extract_7z "${TMP_DIR}"/disk1.zip "" "${TMP_DIR}"/ex1
-extract_7z "${TMP_DIR}"/disk2.zip "" "${TMP_DIR}"/ex2
-extract_7z "${TMP_DIR}"/disk3.zip "" "${TMP_DIR}"/ex3
-extract_7z "${TMP_DIR}"/disk4.zip "" "${TMP_DIR}"/ex4
-extract_7z "${TMP_DIR}"/disk5.zip "" "${TMP_DIR}"/ex5
-
-IMAGE1="ex1/`ls \"${TMP_DIR}\"/ex1/`"
-IMAGE2="ex2/`ls \"${TMP_DIR}\"/ex2/`"
-IMAGE3="ex3/`ls \"${TMP_DIR}\"/ex3/`"
-IMAGE4="ex4/`ls \"${TMP_DIR}\"/ex4/`"
-IMAGE5="ex5/`ls \"${TMP_DIR}\"/ex5/`"
-
-extract_to_c "$IMAGE1" ibmbio.com
-extract_to_c "$IMAGE1" ibmdos.com
-extract_to_c "$IMAGE1" command.com
+mkdir -p "$1"
+cp $INST_DIR/IBMBIO.COM "$DRIVE_C"
+cp $INST_DIR/IBMDOS.COM "$DRIVE_C"
+cp $INST_DIR/COMMAND.COM "$DRIVE_C"
