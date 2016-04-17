@@ -4,15 +4,8 @@ IMGURL=http://archive.org/download/IBM_PC_Compatibles_TOSEC_2012_04_23/IBM_PC_Co
 IMGCNT=1
 #IMGCNT=6
 
-. ./include/diskimage_download+extract.sh
+. ./include/pcdos_download+extract.sh
 
 TMP_DIR=/tmp/pcdos2k-$USER
-INST_DIR=$TMP_DIR/inst
 
-mkdir -p $INST_DIR
-download_and_extract "$IMGURL" "$IMGCNT" $INST_DIR
-
-mkdir -p "$1"
-cp $INST_DIR/IBMBIO.COM "$1"
-cp $INST_DIR/IBMDOS.COM "$1"
-cp $INST_DIR/COMMAND.COM "$1"
+download_and_extract_pcdos "$1"

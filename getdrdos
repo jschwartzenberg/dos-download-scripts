@@ -10,16 +10,8 @@ IMG=IBM%%20PC%%20Compatibles%%20%%5BTOSEC%%5D%%2FIBM%%20PC%%20Compatibles%%20-%%
 IMGCNT=1
 #IMGCNT=5
 
-. ./include/diskimage_download+extract.sh
+. ./include/pcdos_download+extract.sh
 
 TMP_DIR=/tmp/drdos703-$USER
-INST_DIR=$TMP_DIR/inst
-DRIVE_C="$1"
 
-mkdir -p $INST_DIR
-download_and_extract "${DISKS_BASE_URL}"/"$IMG" "$IMGCNT" $INST_DIR
-
-mkdir -p "$1"
-cp $INST_DIR/IBMBIO.COM "$DRIVE_C"
-cp $INST_DIR/IBMDOS.COM "$DRIVE_C"
-cp $INST_DIR/COMMAND.COM "$DRIVE_C"
+download_and_extract_pcdos "$1"
