@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DESTINATION=$1
+TRICK=$2
+
+. ./tricks/$TRICK
+
+. ./include/diskimage_download+extract.sh
+
+TMP_DIR=/tmp/$TRICK-$USER
+
+mkdir -p "$DESTINATION"
+download_and_extract "$IMGURL" "$IMGCNT" "$DESTINATION"
