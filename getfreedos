@@ -14,9 +14,6 @@ WCD_URL=${DEFAULT_MIRROR}/util/user/wcd/wcd530b.zip
 
 TMP_DIR=/tmp/freedos-$USER
 DRIVE_ROOT="$1"
-DOSEMU_EXECUTABLE=`which dosemu`
-DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
-DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
 . ./include/download.sh
 
