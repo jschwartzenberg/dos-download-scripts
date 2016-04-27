@@ -16,21 +16,21 @@ DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
 extract_freedos_archives()
 {
-for tool in ${FREEDOS_TOOLS}
-do
-  unzip -d "$DRIVE_ROOT" -qq -LL "${TMP_DIR}"/"$tool".zip -x source/* bin/kernl86.sys 2>/dev/null
-done
+  for tool in ${FREEDOS_TOOLS}
+  do
+    unzip -d "$DRIVE_ROOT" -qq -LL "${TMP_DIR}"/"$tool".zip -x source/* bin/kernl86.sys 2>/dev/null
+  done
 }
 
 download_archives()
 {
-echo Downloading FreeDOS...
-mkdir -p "${TMP_DIR}"
-for filename in ${FREEDOS_MAIN_FILES} ${FREEDOS_TOOLS}
-do
-  download_file "${FREEDOS_BASE_URL}"/"$filename".zip "${TMP_DIR}"/"$filename".zip
-done
-echo Downloading done
+  echo Downloading FreeDOS...
+  mkdir -p "${TMP_DIR}"
+  for filename in ${FREEDOS_MAIN_FILES} ${FREEDOS_TOOLS}
+  do
+    download_file "${FREEDOS_BASE_URL}"/"$filename".zip "${TMP_DIR}"/"$filename".zip
+  done
+  echo Downloading done
 }
 
 download_archives
