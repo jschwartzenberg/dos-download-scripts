@@ -1,8 +1,8 @@
 #!/bin/sh
 
 FREEDOS_BASE_URL=http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.1/repos/base
-FREEDOS_MAIN_FILES="command kernel"
-FREEDOS_TOOLS="assign attrib choice comp debug defrag deltree diskcomp diskcopy edit \
+FREEDOS_MAIN_FILES="command"
+FREEDOS_TOOLS="kernel command assign attrib choice comp debug defrag deltree diskcomp diskcopy edit \
 exe2bin fc find format help label mem mode more move nansi replace share shsucdx \
 sort swsubst tree xcopy"
 
@@ -13,15 +13,12 @@ DOSEMU_SYSPREFIX=`dirname ${DOSEMU_EXECUTABLE}`/..
 DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
 . ./include/download.sh
-. ./include/extract.sh
 
-extract_freedos_tools()
+extract_freedos_archives()
 {
 for tool in ${FREEDOS_TOOLS}
 do
-  extract_to_c_bin "$tool".zip bin/"${tool}".com
-  extract_to_c_bin "$tool".zip bin/"${tool}".exe
-  extract_to_c_bin "$tool".zip bin/"${tool}".sys
+  unzip -d "$DRIVE_ROOT" -qq -LL "${TMP_DIR}"/"$tool".zip -x source/* bin/kernl86.sys 2>/dev/null
 done
 }
 
@@ -37,14 +34,12 @@ echo Downloading done
 }
 
 download_archives
+
 echo Extracting FreeDOS...
-mkdir -p "${DRIVE_ROOT}"/bin
+mkdir -p "${DRIVE_ROOT}"
+extract_freedos_archives
 
-extract_to_c     "kernel.zip"  bin/kernl386.sys
-mv "${DRIVE_ROOT}"/kernl386.sys "${DRIVE_ROOT}"/kernel.sys
-extract_to_c     "command.zip" bin/command.com
-extract_to_c_bin "kernel.zip"  bin/sys.com
-
-extract_freedos_tools
+mv "${DRIVE_ROOT}"/bin/kernl386.sys "${DRIVE_ROOT}"/kernel.sys
+ln -s bin/command.com "${DRIVE_ROOT}"/command.com
 
 echo Extraction complete
