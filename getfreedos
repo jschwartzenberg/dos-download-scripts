@@ -33,6 +33,17 @@ download_archives()
   echo Downloading done
 }
 
+verify_system()
+{
+  if [ ! `which unzip` ] ; then
+    echo Please install unzip and make sure that unzip is on your PATH
+    exit 1
+  fi
+}
+
+
+verify_system
+
 download_archives
 
 echo Extracting FreeDOS...
