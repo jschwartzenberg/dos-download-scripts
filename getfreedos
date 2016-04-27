@@ -1,8 +1,7 @@
 #!/bin/sh
 
-FREEDOS_BASE_URL=http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.1/repos/base
-FREEDOS_MAIN_FILES="command"
-FREEDOS_TOOLS="kernel command assign attrib choice comp debug defrag deltree diskcomp diskcopy edit \
+BASE_URL=http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.1/repos/base
+ARCHIVES="kernel command assign attrib choice comp debug defrag deltree diskcomp diskcopy edit \
 exe2bin fc find format help label mem mode more move nansi replace share shsucdx \
 sort swsubst tree xcopy"
 
@@ -16,9 +15,9 @@ DOSEMU_DRIVEZ_DIR=`realpath ${DOSEMU_SYSPREFIX}`/share/dosemu/drive_z
 
 extract_freedos_archives()
 {
-  for tool in ${FREEDOS_TOOLS}
+  for filename in ${ARCHIVES}
   do
-    unzip -d "$DRIVE_ROOT" -qq -LL "${TMP_DIR}"/"$tool".zip -x source/* bin/kernl86.sys 2>/dev/null
+    unzip -d "$DRIVE_ROOT" -qq -LL "${TMP_DIR}"/"$filename".zip -x source/* bin/kernl86.sys 2>/dev/null
   done
 }
 
@@ -26,9 +25,9 @@ download_archives()
 {
   echo Downloading FreeDOS...
   mkdir -p "${TMP_DIR}"
-  for filename in ${FREEDOS_MAIN_FILES} ${FREEDOS_TOOLS}
+  for filename in ${ARCHIVES}
   do
-    download_file "${FREEDOS_BASE_URL}"/"$filename".zip "${TMP_DIR}"/"$filename".zip
+    download_file "${BASE_URL}"/"$filename".zip "${TMP_DIR}"/"$filename".zip
   done
   echo Downloading done
 }
