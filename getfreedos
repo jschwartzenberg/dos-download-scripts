@@ -15,8 +15,6 @@ WCD_URL=${DEFAULT_MIRROR}/util/user/wcd/wcd530b.zip
 TMP_DIR=/tmp/freedos-$USER
 DRIVE_ROOT="$1"
 
-. ./include/download.sh
-
 extract_freedos_archives()
 {
   for filename in ${ARCHIVES} bwbasic touch wcd
@@ -29,6 +27,19 @@ extract_lib()
 {
   unzip -d "$DRIVE_ROOT"/bin -qq -LL -j "${TMP_DIR}"/lib.zip llib32/lib.exe
   unzip -d "$DRIVE_ROOT"/doc/lib -qq -LL -j "${TMP_DIR}"/lib.zip llib32/readme
+}
+
+download_file()
+{
+  SOURCE=$1
+  DESTINATION=$2
+  if [ -f "$DESTINATION" ]
+  then
+    echo "$DESTINATION" found, not redownloading
+  else
+    echo Downloading "$SOURCE"...
+    wget --quiet "$SOURCE" -O "$DESTINATION"
+  fi
 }
 
 download_archives()
@@ -52,6 +63,11 @@ verify_system()
 {
   if [ ! `which unzip` ] ; then
     echo Please install unzip and make sure that unzip is on your PATH
+    exit 1
+  fi
+
+  if [ ! `which wget` ] ; then
+    echo Please install wget and make sure that wget is on your PATH
     exit 1
   fi
 }
