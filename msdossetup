@@ -1,0 +1,48 @@
+#!/bin/sh
+# This script does a manual MS-DOS installation as described in Microsoft KB117245
+
+if [ ! `which msexpand` ] ; then
+  echo Please install msexpand and make sure that msexpand is on your PATH
+  exit 1
+fi
+
+SOURCE=$1
+DESTINATION=$2
+
+expand_files_with_extension()
+{
+  EXTENSION=$1
+  EXTENSION_COMPRESSED="${1%?}_"
+  ls "$SOURCE"/*.$EXTENSION_COMPRESSED > /dev/null 2> /dev/null
+  if [ $? -eq 0 ] # continue only if there are compressed files with this extension
+  then
+    for i in "$SOURCE"/*.$EXTENSION_COMPRESSED
+    do
+      msexpand "$i" $DESTINATION/DOS/`basename "${i%.???}.$EXTENSION"`
+    done
+  fi
+}
+
+mkdir -p $DESTINATION/DOS
+
+# it's not possible to deduce the final letter of the extension, so we have to provide the list
+EXTENSION_LIST="INF 386 BIN COM CPI DLL EXE OVL SYS TXT GRP HLP LST PRO"
+
+# fill C:\DOS
+for extension in $EXTENSION_LIST
+do
+  cp $SOURCE/*.$extension $DESTINATION/DOS 2> /dev/null
+  expand_files_with_extension $extension
+done
+
+move_to_rootdir()
+{
+  mv $DESTINATION/DOS/$1 $DESTINATION/ 2> /dev/null
+}
+
+ROOTDIR_FILES="WINA20.386 ???SPACE.BIN IO,SYS MSDOS.SYS COMMAND.COM"
+
+for rootdir_file in $ROOTDIR_FILES
+do
+  move_to_rootdir $rootdir_file
+done
