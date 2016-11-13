@@ -1,0 +1,20 @@
+#!/bin/sh
+DESTIONATION="$1"
+TMP_DIR=/tmp/$0-$USER
+
+. ./include/download.sh
+. ./include/extract.sh
+
+mkdir -p "$TMP_DIR" "$DESTIONATION"/mouse "$DESTIONATION"/video "$DESTIONATION"/audio
+download_file https://github.com/stsp/win31-mouse-driver/blob/master/out/i33mouse.drv?raw=true "$DESTIONATION"/mouse/i33mouse.drv
+download_file https://raw.githubusercontent.com/stsp/win31-mouse-driver/master/out/oemsetup.inf "$DESTIONATION"/mouse/oemsetup.inf
+
+download_file http://files.mpoli.fi/hardware/DISPLAY/TRIDENT/TVGAW31A.ZIP "$TMP_DIR"/tvgaw31a-zip
+download_file http://files.mpoli.fi/hardware/DISPLAY/TRIDENT/TVGAW31B.ZIP "$TMP_DIR"/tvgaw31b-zip
+
+download_file http://files2.europe.creative.com/manualdn/Drivers/Others/272/s16dw3up.exe "$TMP_DIR"/s16dw3up.exe
+
+extract_7z "$TMP_DIR"/tvgaw31a-zip "" "$DESTIONATION"/video/
+extract_7z "$TMP_DIR"/tvgaw31b-zip "" "$DESTIONATION"/video/
+
+extract_7z "$TMP_DIR"/s16dw3up.exe ""  "$DESTIONATION"/audio/
