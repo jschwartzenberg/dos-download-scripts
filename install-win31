@@ -1,0 +1,52 @@
+#!/bin/sh
+
+wait_for_text()
+{
+  while true; do
+    TEXT=`xwd -id $WINDOW_ID | convert - pnm:- |gocr -i -`
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
+  done
+}
+
+press_enter()
+{
+  xdotool key  --window $WINDOW_ID Return
+}
+
+type()
+{
+  xdotool type --window $WINDOW_ID $@
+}
+
+mkdir -p $1/c $1/d
+echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
+
+#/usr/local/share/dosemu/downloaddos 
+/usr/local/share/dosemu/installdos /var/lib/dosemu/install/msdos622/ $1/c
+cp /usr/local/share/dosemu/commands/config.sys $1/c
+cp /usr/local/share/dosemu/commands/autoexec.bat $1/c
+export dosemu__hdimage="$1/*"
+
+./dostricks $1/c/inst/win31 win31
+
+export dosemu__X_title="automated by $$"
+dosemu &
+sleep 1
+WINDOW_ID=`xdotool search --name "$$"`
+
+wait_for_text 'C:\'
+
+type cd \\inst\\win31
+press_enter
+type setup
+press_enter
+
+wait_for_text Windows
+
+press_enter
+wait_for_text Custom
+type c
+wait_for_text directory
+press_enter
