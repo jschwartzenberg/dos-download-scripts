@@ -7,12 +7,23 @@ wait_for_text()
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
+    # TODO: try gocr with cropped image
+    TEXT=`xwd -id $WINDOW_ID | convert - pnm:- |tesseract stdin stdout`
+    echo $TEXT
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
   done
 }
 
 press_enter()
 {
   xdotool key  --window $WINDOW_ID Return
+}
+
+press()
+{
+  xdotool key  --window $WINDOW_ID $@
 }
 
 type()
@@ -30,6 +41,7 @@ cp /usr/local/share/dosemu/commands/autoexec.bat $1/c
 export dosemu__hdimage="$1/*"
 
 ./dostricks $1/c/inst/win31 win31
+./win31drv $1/c/inst/win31drv
 
 export dosemu__X_title="automated by $$"
 dosemu &
@@ -50,3 +62,93 @@ wait_for_text Custom
 type c
 wait_for_text directory
 press_enter
+
+# Computer
+wait_for_text asterisk
+press Up Up Up Up Up Up Up Return
+wait_for_text type
+press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
+
+# Display
+wait_for_text asterisk
+press Up Up Up Up Up Up Return
+wait_for_text installed
+press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down \
+ Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
+wait_for_text manufacturer
+press Home c colon
+type \\inst\\win31drv\\video
+press_enter
+wait_for_text chosen
+# 1024x768x8 small fonts
+press Down Down Return
+# 1024x768x8 large fonts
+#press Down Down Down Return
+
+# Mouse
+wait_for_text asterisk
+press Up Up Up Up Up Return
+wait_for_text list
+press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
+wait_for_text manufacturer
+press Home c colon
+type \\inst\\win31drv\\mouse
+press_enter
+wait_for_text chosen
+press_enter
+
+wait_for_text asterisk
+press_enter
+
+# enter your full name
+wait_for_text ENTER
+type User
+press alt+o
+#verify it's correct
+wait_for_text verify
+press alt+o
+
+wait_for_text selected
+press alt+o
+
+# select components
+wait_for_text groups
+press alt+o
+
+# Virtual Memory
+wait_for_text swap
+press space
+
+# update connfig.sys and autoexec.bat
+wait_for_text changes
+press alt+o
+
+# confirm above
+wait_for_text saved
+press space
+
+# choose a printer
+wait_for_text choose
+press Tab Tab space
+
+# search applications
+wait_for_text Search
+press alt+s
+# set name for edit
+wait_for_text name
+press_enter
+
+# add all applications
+#wait_for_text hard
+sleep 1
+press alt+d Return
+
+# Tutorial
+wait_for_text been
+press alt+s
+
+# Reboot to finish
+wait_for_text Remove
+press alt+r
+
+echo Run 'dosemu__hdimage="$1/*" dosemu' to start DOSEMU2 with the installed system
