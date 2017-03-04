@@ -10,6 +10,11 @@ if [ ! `which convert` ] ; then
   exit 1
 fi
 
+if [ ! `which xdotool` ] ; then
+  echo Please install xdotool and make sure that xdotool is on your PATH
+  exit 1
+fi
+
 set_window_id()
 {
   while [ -z $WINDOW_ID ]; do
