@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ ! `which gocr` ] ; then
+  echo Please install gocr and make sure that gocr is on your PATH
+  exit 1
+fi
+
+# gocr has problems when there are different sizes/fonts on one shot so there are variants with crop to work around that
 wait_for_text()
 {
   while true; do
@@ -7,9 +13,11 @@ wait_for_text()
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    # TODO: try gocr with cropped image
-    TEXT=`xwd -id $WINDOW_ID | convert - pnm:- |tesseract stdin stdout`
-    echo $TEXT
+    TEXT=`xwd -id $WINDOW_ID | convert -crop 800x600+100+100 - pnm:- |gocr -i -`
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
+    TEXT=`xwd -id $WINDOW_ID | convert -crop 640x480+0+0 - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
@@ -31,13 +39,30 @@ type()
   xdotool type --window $WINDOW_ID $@
 }
 
+copy_if_exists()
+{
+  if [ -f "$1" ]; then
+    cp "$1" "$2"
+  fi
+}
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 DIRECTORY" >&2
+  echo "DIRECTORY should be empty or non-existant, then it will be created." >&2
+  echo "Example: $0 /tmp/win31" >&2
+  exit 1
+fi
+
 mkdir -p $1/c $1/d
 echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
 
-#/usr/local/share/dosemu/downloaddos 
-/usr/local/share/dosemu/installdos /var/lib/dosemu/install/msdos622/ $1/c
-cp /usr/local/share/dosemu/commands/config.sys $1/c
-cp /usr/local/share/dosemu/commands/autoexec.bat $1/c
+./downloaddos -d msdos622 /tmp/dosinst/msdos622
+./installdos /tmp/dosinst/msdos622/ $1/c
+
+copy_if_exists /usr/local/share/dosemu/commands/config.sys "$1"/c
+copy_if_exists /usr/local/share/dosemu/commands/autoexec.bat "$1"/c
+copy_if_exists /usr/share/dosemu/commands/config.sys "$1"/c
+copy_if_exists /usr/share/dosemu/commands/autoexec.bat "$1"/c
 export dosemu__hdimage="$1/*"
 
 ./dostricks $1/c/inst/win31 win31
@@ -101,7 +126,7 @@ wait_for_text asterisk
 press_enter
 
 # enter your full name
-wait_for_text ENTER
+wait_for_text full
 type User
 press alt+o
 #verify it's correct
@@ -116,19 +141,19 @@ wait_for_text groups
 press alt+o
 
 # Virtual Memory
-wait_for_text swap
+wait_for_text temp
 press space
 
 # update connfig.sys and autoexec.bat
-wait_for_text changes
+wait_for_text moditication
 press alt+o
 
 # confirm above
-wait_for_text saved
+wait_for_text 'old version'
 press space
 
 # choose a printer
-wait_for_text choose
+wait_for_text printer
 press Tab Tab space
 
 # search applications
@@ -148,7 +173,7 @@ wait_for_text been
 press alt+s
 
 # Reboot to finish
-wait_for_text Remove
+wait_for_text prompt
 press alt+r
 
-echo Run 'dosemu__hdimage="$1/*" dosemu' to start DOSEMU2 with the installed system
+echo Run \'dosemu__hdimage="$1/*" dosemu\' to start DOSEMU2 with the installed system
