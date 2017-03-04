@@ -5,6 +5,18 @@ if [ ! `which gocr` ] ; then
   exit 1
 fi
 
+if [ ! `which convert` ] ; then
+  echo Please install ImageMagick and make sure that convert is on your PATH
+  exit 1
+fi
+
+set_window_id()
+{
+  while [ -z $WINDOW_ID ]; do
+    WINDOW_ID=`xdotool search --name "$$"`
+  done
+}
+
 # gocr has problems when there are different sizes/fonts on one shot so there are variants with crop to work around that
 wait_for_text()
 {
@@ -70,8 +82,7 @@ export dosemu__hdimage="$1/*"
 
 export dosemu__X_title="automated by $$"
 dosemu &
-sleep 1
-WINDOW_ID=`xdotool search --name "$$"`
+set_window_id
 
 wait_for_text 'C:\'
 
