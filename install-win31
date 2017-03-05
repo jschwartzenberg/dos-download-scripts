@@ -38,6 +38,14 @@ wait_for_text()
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
+    RANDOM1=`awk -v min=400 -v max=1040 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+    RANDOM2=`awk -v min=300 -v max=768 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+    RANDOM3=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+    RANDOM4=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop "$RANDOM1"x"$RANDOM2"+"$RANDOM3"+"$RANDOM4" - pnm:- |gocr -i -`
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
   done
 }
 
