@@ -46,15 +46,6 @@ press_enter()
   xdotool key  --window $WINDOW_ID Return
 }
 
-# workaround for xdotool issue https://github.com/jordansissel/xdotool/issues/150
-type_colon()
-{
-  xdotool keydown --window $WINDOW_ID alt
-  xdotool key     --window $WINDOW_ID KP_Begin
-  xdotool key     --window $WINDOW_ID KP_Up
-  xdotool keyup   --window $WINDOW_ID alt
-}
-
 press()
 {
   xdotool key  --window $WINDOW_ID $@
@@ -131,8 +122,7 @@ wait_for_text installed
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down \
  Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
 wait_for_text manufacturer
-press Home c
-type_colon
+press Home
 type \\inst\\win31drv\\video
 press_enter
 wait_for_text chosen
@@ -147,8 +137,7 @@ press Up Up Up Up Up Return
 wait_for_text list
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
 wait_for_text manufacturer
-press Home c
-type_colon
+press Home
 type \\inst\\win31drv\\mouse
 press_enter
 wait_for_text chosen
