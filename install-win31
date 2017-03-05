@@ -86,7 +86,9 @@ fi
 mkdir -p $1/c $1/d
 echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
 
-./downloaddos -d msdos622 /tmp/dosinst/msdos622
+if [ ! -d /tmp/dosinst/msdos622 ]; then
+  ./downloaddos -d msdos622 /tmp/dosinst/msdos622
+fi
 ./installdos /tmp/dosinst/msdos622/ $1/c
 
 copy_if_exists /usr/local/share/dosemu/commands/config.sys "$1"/c
