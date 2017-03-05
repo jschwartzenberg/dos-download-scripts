@@ -82,9 +82,9 @@ echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
 ./installdos /tmp/dosinst/msdos622/ $1/c
 
 copy_if_exists /usr/local/share/dosemu/commands/config.sys "$1"/c
-copy_if_exists /usr/local/share/dosemu/commands/autoexec.bat "$1"/c
+copy_if_exists /usr/local/share/dosemu/commands/autoemu.bat "$1"/c
 copy_if_exists /usr/share/dosemu/commands/config.sys "$1"/c
-copy_if_exists /usr/share/dosemu/commands/autoexec.bat "$1"/c
+copy_if_exists /usr/share/dosemu/commands/autoemu.bat "$1"/c
 export dosemu__hdimage="$1/*"
 
 ./dostricks $1/c/inst/win31 win31
