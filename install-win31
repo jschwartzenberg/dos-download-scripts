@@ -173,7 +173,7 @@ wait_for_text full
 type User
 press alt+o
 #verify it's correct
-wait_for_text verify
+wait_for_text veri
 press alt+o
 
 wait_for_text selected
