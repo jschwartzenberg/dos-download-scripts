@@ -26,15 +26,15 @@ set_window_id()
 wait_for_text()
 {
   while true; do
-    TEXT=`xwd -id $WINDOW_ID | convert - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -id $WINDOW_ID | convert -crop 800x600+100+100 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 800x600+100+100 - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -id $WINDOW_ID | convert -crop 640x480+0+0 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 640x480+0+0 - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
