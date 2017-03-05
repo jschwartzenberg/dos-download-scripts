@@ -46,6 +46,15 @@ press_enter()
   xdotool key  --window $WINDOW_ID Return
 }
 
+# workaround for xdotool issue https://github.com/jordansissel/xdotool/issues/150
+type_colon()
+{
+  xdotool keydown --window $WINDOW_ID alt
+  xdotool key     --window $WINDOW_ID KP_Begin
+  xdotool key     --window $WINDOW_ID KP_Up
+  xdotool keyup   --window $WINDOW_ID alt
+}
+
 press()
 {
   xdotool key  --window $WINDOW_ID $@
@@ -70,6 +79,11 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
+# dosemu doesn't check the environment variables when this file is not there, seems like a bug
+if [ ! -e ${HOME}/.dosemurc ]; then
+  touch ${HOME}/.dosemurc
+fi
+
 mkdir -p $1/c $1/d
 echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
 
@@ -89,7 +103,7 @@ export dosemu__X_title="automated by $$"
 dosemu &
 set_window_id
 
-wait_for_text 'C:\'
+wait_for_text 'C:\\'
 
 type cd \\inst\\win31
 press_enter
@@ -117,7 +131,8 @@ wait_for_text installed
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down \
  Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
 wait_for_text manufacturer
-press Home c colon
+press Home c
+type_colon
 type \\inst\\win31drv\\video
 press_enter
 wait_for_text chosen
@@ -132,7 +147,8 @@ press Up Up Up Up Up Return
 wait_for_text list
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
 wait_for_text manufacturer
-press Home c colon
+press Home c
+type_colon
 type \\inst\\win31drv\\mouse
 press_enter
 wait_for_text chosen
