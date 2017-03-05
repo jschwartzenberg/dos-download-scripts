@@ -116,7 +116,7 @@ set_window_id
 
 #wait_for_text 'C:\\'
 #backslash still giving issues
-wait_for_text 'C:'
+wait_for_text Welcome
 
 type cd \\inst\\win31
 press_enter
