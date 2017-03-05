@@ -22,10 +22,20 @@ set_window_id()
   done
 }
 
+is_dosemu_active()
+{
+  WINDOW_ID=`xdotool search --name "$$"`
+  if [ -z $WINDOW_ID ]; then
+    exit 1
+  fi
+}
+
 # gocr has problems when there are different sizes/fonts on one shot so there are variants with crop to work around that
 wait_for_text()
 {
   while true; do
+    is_dosemu_active
+
     TEXT=`xwd -silent -id $WINDOW_ID | convert - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
@@ -104,7 +114,9 @@ export dosemu__X_title="automated by $$"
 dosemu &
 set_window_id
 
-wait_for_text 'C:\\'
+#wait_for_text 'C:\\'
+#backslash still giving issues
+wait_for_text 'C:'
 
 type cd \\inst\\win31
 press_enter
