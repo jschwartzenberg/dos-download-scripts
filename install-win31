@@ -223,6 +223,23 @@ press alt+r
 
 ./win31fixes "$1/c/windows"
 
+
+# install Euro symbol support
+sleep 1
+type cd \\inst\\win31up\\win3euro
+press Return
+wait_for_text 'C:\\INST'
+type W31
+press underscore
+type euro
+press space
+type \\WINDOWS
+press Return
+wait_for_text any
+press Return
+type cd \\windows
+press Return
+
 type win
 press Return
 
