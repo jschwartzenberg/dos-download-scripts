@@ -1,0 +1,14 @@
+#!/bin/sh
+WINDOWS_DIR="$1"
+TMP_DIR=/tmp/$0-$USER
+
+. ./include/download.sh
+. ./include/extract.sh
+
+mkdir -p "$TMP_DIR"
+
+download_file https://archive.org/download/ftp.microsoft.com/ftp.microsoft.com.zip/ftp.microsoft.com%2FSoftlib%2FMSLFILES%2FW31FILUP.EXE "$TMP_DIR"/w31filup.exe
+
+extract_7z "$TMP_DIR"/w31filup.exe "winfile.exe" "$WINDOWS_DIR"/
+mv "$WINDOWS_DIR"/WINFILE.EXE "$WINDOWS_DIR"/winfile.exe
+

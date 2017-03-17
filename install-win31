@@ -53,6 +53,7 @@ wait_for_text()
     RANDOM3=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
     RANDOM4=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
     TEXT=`xwd -silent -id $WINDOW_ID | convert -crop "$RANDOM1"x"$RANDOM2"+"$RANDOM3"+"$RANDOM4" - pnm:- |gocr -i -`
+    echo $TEXT
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
@@ -109,6 +110,7 @@ export dosemu__hdimage="$1/*"
 
 ./dostricks $1/c/inst/win31 win31
 ./win31drv $1/c/inst/win31drv
+./win31updates $1/c/inst/win31up
 
 export dosemu__X_title="automated by $$"
 dosemu &
@@ -219,4 +221,35 @@ press alt+s
 wait_for_text prompt
 press alt+r
 
+./win31fixes "$1/c/windows"
+
+type win
+press Return
+
+# install WinG
+wait_for_text ptions
+press alt+f
+press r
+type \\inst\\win31up\\wing\\setup.exe
+press Return
+wait_for_text program
+press alt+c alt+c
+wait_for_text program
+press alt+c
+wait_for_text optimal
+press space
+
+# install V4W
+wait_for_text ptions
+press alt+f
+press r
+type \\inst\\win31up\\v4w\\setup.exe
+press Return
+wait_for_text program
+press alt+c
+wait_for_text complete
+press alt+r
+
+
 echo Run \'dosemu__hdimage="$1/*" dosemu\' to start DOSEMU2 with the installed system
+
