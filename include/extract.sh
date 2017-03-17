@@ -5,11 +5,11 @@ fi
 
 extract_7z()
 {
-  ARCHIVE="$1"
-  FILENAME="$2"
-  DESTINATION=$3
-  echo Extracting $FILENAME
-  7z e "$ARCHIVE" $FILENAME -o"$DESTINATION" -y -ssc- >/dev/null
+  EXTRACT_ARCHIVE="$1"
+  EXTRACT_FILENAME="$2"
+  EXTRACT_DESTINATION=$3
+  echo Extracting $EXTRACT_FILENAME
+  7z e "$EXTRACT_ARCHIVE" $EXTRACT_FILENAME -o"$EXTRACT_DESTINATION" -y -ssc- >/dev/null
 }
 
 extract_to_c()

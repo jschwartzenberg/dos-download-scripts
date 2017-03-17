@@ -5,13 +5,13 @@ fi
 
 download_file()
 {
-  SOURCE=$1
-  DESTINATION=$2
-  if [ -f "$DESTINATION" ]
+  DOWNLOAD_SOURCE=$1
+  DOWNLOAD_DESTINATION=$2
+  if [ -f "$DOWNLOAD_DESTINATION" ]
   then
-    echo "$DESTINATION" found, not redownloading
+    echo "$DOWNLOAD_DESTINATION" found, not redownloading
   else
-    echo Downloading "$SOURCE"...
-    wget --quiet "$SOURCE" -O "$DESTINATION"
+    echo Downloading "$DOWNLOAD_SOURCE"...
+    wget --quiet "$DOWNLOAD_SOURCE" -O "$DOWNLOAD_DESTINATION"
   fi
 }
