@@ -267,6 +267,13 @@ press alt+c
 wait_for_text complete
 press alt+r
 
+# install IE5
+#wait_for_text ptions
+#press alt+f
+#press r
+#type \\inst\\win31ip\\ie5\\setup.exe
+#press Return
+#memory error
 
 echo Run \'dosemu__hdimage="$1/*" dosemu\' to start DOSEMU2 with the installed system
 
