@@ -1,0 +1,14 @@
+#!/bin/sh
+SOURCE_DIR="$1"
+DESTINATION_IMAGE="$2"
+
+#qemu-img create -f raw "$DESTINATION_IMAGE" 256M
+unxz -c baseimage.xz > "$DESTINATION_IMAGE"
+export MTOOLSRC=/tmp/`basename "$DESTINATION_IMAGE"`.mtoolsrc
+echo drive c: file=\""$DESTINATION_IMAGE"\" partition=1 > $MTOOLSRC
+#mpartition -I -s 63 -t 511 -h 16 c:
+#mpartition -cpv -s 63 -t 511 -h 16 c:
+#mformat -B /tmp/`basename "$DESTINATION_IMAGE"` c:
+
+# copy files to image
+mcopy -sn "$SOURCE_DIR"/* c:
