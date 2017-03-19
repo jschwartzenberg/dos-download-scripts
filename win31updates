@@ -24,6 +24,8 @@ download_file https://web.archive.org/web/20020918054115/http://www.cintek.com/d
 extract_7z "$TMP_DIR"/wing10.exe "" "$DESTINATION"/wing
 extract_7z "$TMP_DIR"/wv1160.exe "" "$DESTINATION"/v4w
 extract_7z "$TMP_DIR"/win3euro.exe "" "$DESTINATION"/win3euro
+# workaround for broken xdotool
+ln -s "$DESTINATION"/win3euro/W31_EURO.BAT "$DESTINATION"/win3euro/W31-EURO.BAT
 extract_7z "$TMP_DIR"/ie5win31.exe "" "$DESTINATION"/ie5
 
 # http://gaby.de/ftp/pub/win3x/archive/index.txt
