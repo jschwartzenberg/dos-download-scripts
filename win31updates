@@ -17,16 +17,17 @@ download_file https://archive.org/download/ftp.microsoft.com/ftp.microsoft.com.z
 download_file https://support.toshiba.ca/support/isg/drivers/archives/files_Archive/win3x/wv1160.exe "$TMP_DIR"/wv1160.exe
 
 # ie5
+# http://2ch-matome-smartphone.blog.jp/archives/1026316450.html
 # http://web.archive.org/web/20040608163954/http://download.microsoft.com/msdownload/ie5/rtw/win16/en/cab/setup.exe
 # http://web.archive.org/web/20030221021934/http://download.microsoft.com/msdownload/ie5/rtw/win16/en/cab/browser.cab
-download_file https://web.archive.org/web/20020918054115/http://www.cintek.com/download/files/win31/ie5/ie5win31.exe "$TMP_DIR"/ie5win31.exe
+download_file #https://web.archive.org/web/20020918054115/http://www.cintek.com/download/files/win31/ie5/ie5win31.exe "$TMP_DIR"/ie5win31.exe
 
 extract_7z "$TMP_DIR"/wing10.exe "" "$DESTINATION"/wing
 extract_7z "$TMP_DIR"/wv1160.exe "" "$DESTINATION"/v4w
 extract_7z "$TMP_DIR"/win3euro.exe "" "$DESTINATION"/win3euro
 # workaround for broken xdotool
 ln -s "$DESTINATION"/win3euro/W31_EURO.BAT "$DESTINATION"/win3euro/W31-EURO.BAT
-extract_7z "$TMP_DIR"/ie5win31.exe "" "$DESTINATION"/ie5
+#extract_7z "$TMP_DIR"/ie5win31.exe "" "$DESTINATION"/ie5
 
 # http://gaby.de/ftp/pub/win3x/archive/index.txt
 # https://ia802603.us.archive.org/zipview.php?zip=/13/items/ftp.microsoft.com/ftp.microsoft.com.zip
