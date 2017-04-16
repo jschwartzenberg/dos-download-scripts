@@ -9,5 +9,9 @@ TRICK=$2
 
 TMP_DIR=/tmp/$TRICK-$USER
 
+if [ -z "$SEPARATE_DIRS" ]; then
+  SEPARATE_DIRS=false
+fi
+
 mkdir -p "$DESTINATION"
-download_and_extract "$IMGURL" "$IMGCNT" "$DESTINATION"
+download_and_extract "$IMGURL" "$IMGCNT" "$DESTINATION" "$SEPARATE_DIRS"
