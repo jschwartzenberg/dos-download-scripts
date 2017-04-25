@@ -12,13 +12,13 @@ download_file https://raw.githubusercontent.com/stsp/win31-mouse-driver/master/o
 download_file http://files.mpoli.fi/hardware/DISPLAY/TRIDENT/TVGAW31A.ZIP "$TMP_DIR"/tvgaw31a.zip
 download_file http://files.mpoli.fi/hardware/DISPLAY/TRIDENT/TVGAW31B.ZIP "$TMP_DIR"/tvgaw31b.zip
 
-download_file http://files2.europe.creative.com/manualdn/Drivers/Others/272/s16dw3up.exe "$TMP_DIR"/s16dw3up.exe
-
-download_file http://www-ftp.lip6.fr/ftp/pub/pc/garbo/windows/drivers/sbpw31.zip "$TMP_DIR"/sbpw31.zip
+download_file https://github.com/jschwartzenberg/dos-download-scripts/blob/master/sb16w31/SB16B_D1.ZIP?raw=true "$TMP_DIR"/SB16B_D1.ZIP
+download_file https://github.com/jschwartzenberg/dos-download-scripts/blob/master/sb16w31/SB16B_D2.ZIP?raw=true "$TMP_DIR"/SB16B_D2.ZIP
+download_file https://github.com/jschwartzenberg/dos-download-scripts/blob/master/sb16w31/SB16B_D3.ZIP?raw=true "$TMP_DIR"/SB16B_D3.ZIP
 
 extract_7z "$TMP_DIR"/tvgaw31a.zip "" "$DESTINATION"/video/
 extract_7z "$TMP_DIR"/tvgaw31b.zip "" "$DESTINATION"/video/
 
-extract_7z "$TMP_DIR"/s16dw3up.exe ""  "$DESTINATION"/audio/
-
-extract_7z "$TMP_DIR"/sbpw31.zip "" "$DESTINATION"/audio2/
+extract_7z "$TMP_DIR"/SB16B_D1.ZIP ""  "$DESTINATION"/audio/
+extract_7z "$TMP_DIR"/SB16B_D2.ZIP ""  "$DESTINATION"/audio/
+extract_7z "$TMP_DIR"/SB16B_D3.ZIP ""  "$DESTINATION"/audio/

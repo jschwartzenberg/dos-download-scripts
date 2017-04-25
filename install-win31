@@ -240,8 +240,51 @@ press Return
 type cd \\windows
 press Return
 
+# install SB16 driver
+type cd \\inst\\win31drv\\audio
+press Return
+wait_for_text 'C:\\INST'
+type install
+press space
+press minus
+type m
+press Return
+wait_for_text 'Sound Blaster 16 Software Installation'
+press Return
+wait_for_text 'Begin Installation'
+press Down
+press Return
+wait_for_text 'PLEASE ENTER YOUR INSTALLATION DIRECTORY.'
+press Return
+wait_for_text 'Sound Blaster 16 software will be installed'
+press Return
+wait_for_text 'The following addresses will be used to set up your system files.'
+press Return
+press y
+wait_for_text 'Please enter the bootup driue of your system for'
+press F3
+wait_for_text 'Sound Blaster 16 software is not completely'
+press y
+wait_for_text 'INST'
+
+type cd \\windows
+press Return
+
 type win
 press Return
+
+wait_for_text ptions
+press alt+f
+press r
+type \\sb16\\winsetup.exe
+press Return
+wait_for_text program
+press alt+o
+wait_for_text backup
+press alt+p
+wait_for_text completed
+press space
+
 
 # install WinG
 wait_for_text ptions
