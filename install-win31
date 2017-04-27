@@ -318,5 +318,5 @@ press alt+r
 #press Return
 #memory error
 
-echo Run \'dosemu__hdimage="$1/*" dosemu\' to start DOSEMU2 with the installed system
+echo Run \'env dosemu__hdimage=\'"$1/*"\' dosemu\' to start DOSEMU2 with the installed system
 
