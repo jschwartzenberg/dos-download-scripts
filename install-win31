@@ -150,10 +150,16 @@ press Home
 type \\inst\\win31drv\\video
 press_enter
 wait_for_text chosen
+# 1024x768x4 small fonts - doesn't work well in dosemu
+#press Return
+# 1024x768x4 large fonts - ?
+#press Down Return
 # 1024x768x8 small fonts
 press Down Down Return
 # 1024x768x8 large fonts
 #press Down Down Down Return
+# 640x480x8
+#press Down Down Down Down Down Down Return
 
 # Mouse
 wait_for_text asterisk
@@ -194,7 +200,7 @@ wait_for_text moditication
 press alt+o
 
 # confirm above
-wait_for_text 'old version'
+wait_for_text 'version'
 press space
 
 # choose a printer
@@ -282,7 +288,7 @@ wait_for_text program
 press alt+o
 wait_for_text backup
 press alt+p
-wait_for_text completed
+wait_for_text 'you need to'
 press space
 
 
