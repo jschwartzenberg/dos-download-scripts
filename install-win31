@@ -277,6 +277,9 @@ type cd \\windows
 press Return
 
 type win
+press space
+press slash
+type 3
 press Return
 
 wait_for_text ptions
