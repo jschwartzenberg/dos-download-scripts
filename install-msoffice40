@@ -1,0 +1,65 @@
+#!/bin/sh
+
+. ./include/rc.sh
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 DIRECTORY" >&2
+  echo "DIRECTORY should contain an existing Windows 3.1 installation." >&2
+  echo "Example: $0 /tmp/win31" >&2
+  exit 1
+fi
+
+./dostricks $1/c/inst/office40 msoffice40
+
+export dosemu__hdimage="$1/*"
+export dosemu__X_title="automated by $$"
+dosemu &
+set_window_id
+
+wait_for_text 'C:\\'
+
+type cd
+press space
+type '\inst\office40\disk1'
+press Return
+type \\windows\\win
+press space
+press slash
+type 3
+press space
+type setup.exe
+press Return
+
+wait_for_text 'Microsoft Office 4.O Setup'
+press space
+wait_for_text 'Disk Set Previously'
+press space
+wait_for_text 'you need to call'
+press space
+wait_for_text 'the OK button'
+press space
+wait_for_text 'the OK button'
+press space
+wait_for_text 'the OK button'
+press space
+wait_for_text 'the OK button'
+press space
+wait_for_text 'the type'
+press space
+# Lotus 123 help
+wait_for_text 'about'
+press alt+n
+# WordPerfect help
+wait_for_text 'tool'
+press alt+n
+wait_for_text 'to the group'
+press alt+c
+wait_for_text 'that are required to run'
+press space
+wait_for_text 'ully'
+press space
+
+
+echo_text
+sleep 2
+echo_text
