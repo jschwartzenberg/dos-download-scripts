@@ -24,15 +24,12 @@ type '\inst\office40\disk1'
 press Return
 type \\windows\\win
 press space
-press slash
-type 3
-press space
 type setup.exe
 press Return
 
-wait_for_text 'Microsoft Office 4.O Setup'
+wait_for_text 'they are in'
 press space
-wait_for_text 'Disk Set Previously'
+wait_for_text 'already'
 press space
 wait_for_text 'you need to call'
 press space

@@ -48,6 +48,10 @@ wait_for_text()
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+100+100 - pnm:- |gocr -i -`
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
     TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+200+200 - pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;

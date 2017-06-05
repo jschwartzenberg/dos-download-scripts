@@ -82,11 +82,13 @@ wait_for_text chosen
 # 1024x768x4 large fonts - ?
 #press Down Return
 # 1024x768x8 small fonts
-press Down Down Return
+#press Down Down Return
 # 1024x768x8 large fonts
 #press Down Down Down Return
 # 640x480x8
 #press Down Down Down Down Down Down Return
+# 800x600x8
+press Down Down Down Down Down Down Down Down Down Down Down Return
 
 # Mouse
 wait_for_text asterisk
@@ -123,7 +125,7 @@ wait_for_text temp
 press space
 
 # update connfig.sys and autoexec.bat
-wait_for_text moditication
+wait_for_text ENTER
 press alt+o
 
 # confirm above
@@ -135,10 +137,10 @@ wait_for_text printer
 press Tab Tab space
 
 # search applications
-wait_for_text Search
+wait_for_text 'hard'
 press alt+s
 # set name for edit
-wait_for_text name
+wait_for_text ENTER
 press_enter
 
 # add all applications
@@ -194,7 +196,7 @@ press Return
 wait_for_text 'The following addresses will be used to set up your system files.'
 press Return
 press y
-wait_for_text 'Please enter the bootup driue of your system for'
+wait_for_text 'Please enter the bootup'
 press F3
 wait_for_text 'Sound Blaster 16 software is not completely'
 press y
@@ -204,9 +206,6 @@ type cd \\windows
 press Return
 
 type win
-press space
-press slash
-type 3
 press Return
 
 wait_for_text ptions
@@ -214,13 +213,13 @@ press alt+f
 press r
 type \\sb16\\winsetup.exe
 press Return
-wait_for_text program
+wait_for_text progr
 press alt+o
-wait_for_text backup
+wait_for_text ckup
 press alt+p
-wait_for_text 'you need to'
+wait_for_text 'need to'
 press space
-
+sleep 1
 
 # install WinG
 wait_for_text ptions
@@ -228,11 +227,11 @@ press alt+f
 press r
 type \\inst\\win31up\\wing\\setup.exe
 press Return
-wait_for_text program
+wait_for_text pro
 press alt+c alt+c
-wait_for_text program
+wait_for_text pro
 press alt+c
-wait_for_text optimal
+wait_for_text optim
 press space
 
 # install V4W
@@ -241,7 +240,7 @@ press alt+f
 press r
 type \\inst\\win31up\\v4w\\setup.exe
 press Return
-wait_for_text program
+wait_for_text ideo
 press alt+c
 wait_for_text complete
 press alt+r
