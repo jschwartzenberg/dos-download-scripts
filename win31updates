@@ -14,7 +14,7 @@ download_file https://web.archive.org/web/20010708140540/http://www.eu.microsoft
 download_file https://archive.org/download/ftp.microsoft.com/ftp.microsoft.com.zip/ftp.microsoft.com%2FSoftlib%2FMSLFILES%2FWING10.EXE "$TMP_DIR"/wing10.exe
 
 # v4w
-download_file https://support.toshiba.ca/support/isg/drivers/archives/files_Archive/win3x/wv1160.exe "$TMP_DIR"/wv1160.exe
+download_file http://ftp.ulb.ac.be/pub/resulb/PC/Netscape/wv1160.exe "$TMP_DIR"/wv1160.exe
 
 # ie5
 # http://2ch-matome-smartphone.blog.jp/archives/1026316450.html
