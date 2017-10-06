@@ -15,6 +15,11 @@ if [ ! `which xdotool` ] ; then
   exit 1
 fi
 
+if [ ! `which xwd` ] ; then
+  echo Please install xwd and make sure that xwd is on your PATH
+  exit 1
+fi
+
 set_window_id()
 {
   while [ -z $WINDOW_ID ]; do
