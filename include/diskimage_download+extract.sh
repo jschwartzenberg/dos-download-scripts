@@ -23,3 +23,8 @@ download_and_extract()
     fi
   done
 }
+
+if [ ! `which mcopy` ] ; then
+  echo Please install mtools and make sure that mcopy is on your PATH
+  exit 1
+fi
