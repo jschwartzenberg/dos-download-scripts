@@ -41,23 +41,23 @@ wait_for_text()
   while true; do
     is_dosemu_active
 
-    TEXT=`xwd -silent -id $WINDOW_ID | convert - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert xwd:- pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 800x600+100+100 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 800x600+100+100 xwd:- pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 640x480+0+0 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 640x480+0+0 xwd:- pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+100+100 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+100+100 xwd:- pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+200+200 - pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+200+200 xwd:- pnm:- |gocr -i -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
@@ -65,8 +65,8 @@ wait_for_text()
     RANDOM2=`awk -v min=300 -v max=768 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
     RANDOM3=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
     RANDOM4=`awk -v min=20 -v max=100 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop "$RANDOM1"x"$RANDOM2"+"$RANDOM3"+"$RANDOM4" - pnm:- |gocr -i -`
-    echo $TEXT
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop "$RANDOM1"x"$RANDOM2"+"$RANDOM3"+"$RANDOM4" xwd:- pnm:- |gocr -i -`
+    echo Waiting for $1, but screen shows: $TEXT
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
@@ -75,7 +75,7 @@ wait_for_text()
 
 echo_text()
 {
-  echo `xwd -silent -id $WINDOW_ID | convert - pnm:- |gocr -i -`
+  echo `xwd -silent -id $WINDOW_ID | convert xwd:- pnm:- |gocr -i -`
 }
 
 press_enter()
