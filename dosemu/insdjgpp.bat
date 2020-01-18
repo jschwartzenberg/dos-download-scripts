@@ -16,6 +16,7 @@ unix eval wget %DEFAULT_MIRROR%/v2apps/rhid15ab.zip -O %INST_DIR_UNIX%/rhid15ab.
 unix eval wget %DEFAULT_MIRROR%/v2gnu/bnu232b.zip -O %INST_DIR_UNIX%/bnu232b.zip
 unix eval wget %DEFAULT_MIRROR%/v2gnu/gcc910b.zip -O %INST_DIR_UNIX%/gcc910b.zip
 unix eval wget %DEFAULT_MIRROR%/v2gnu/gdb801b.zip -O %INST_DIR_UNIX%/gdb801b.zip
+unix eval wget %DEFAULT_MIRROR%/v2gnu/gpp910b.zip -O %INST_DIR_UNIX%/gpp910b.zip
 unix eval wget %DEFAULT_MIRROR%/v2gnu/mak421b.zip -O %INST_DIR_UNIX%/mak421b.zip
 
 mkdir djgpp
@@ -26,6 +27,7 @@ cd djgpp
 %INST_DIR%\unzip32 %INST_DIR%\bnu232b.zip
 %INST_DIR%\unzip32 -o %INST_DIR%\gcc910b.zip
 %INST_DIR%\unzip32 %INST_DIR%\gdb801b.zip
+%INST_DIR%\unzip32 %INST_DIR%\gpp910b.zip
 %INST_DIR%\unzip32 %INST_DIR%\mak421b.zip
 
 echo path %USERDRV%:\djgpp\bin;%%PATH%% > %USERDRV%:\envdjgpp.bat
