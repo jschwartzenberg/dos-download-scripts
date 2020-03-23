@@ -21,7 +21,7 @@ if [ ! -e ${HOME}/.dosemurc ]; then
   touch ${HOME}/.dosemurc
 fi
 
-mkdir -p $1/c $1/d
+mkdir -p $1/c
 echo \${DOSEMU_COMMANDS_DIR} > "$1"/e.lnk
 
 if [ ! -d /tmp/dosinst/msdos622 ]; then
@@ -160,8 +160,8 @@ press alt+r
 
 
 # install Euro symbol support
-sleep 1
-type cd \\inst\\win31up\\win3euro
+sleep 5
+type cd '\inst\win31up\win3euro'
 press Return
 wait_for_text 'C:\\INST'
 type W31
