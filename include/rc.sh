@@ -45,19 +45,19 @@ wait_for_text()
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 800x600+100+100 xwd:- pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 800x600+100+100 xwd:- pnm:- |gocr -i -m 8 -d 0 -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 640x480+0+0 xwd:- pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 640x480+0+0 xwd:- pnm:- |gocr -i -m 8 -d 0 -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+100+100 xwd:- pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+100+100 xwd:- pnm:- |gocr -i -m 8 -d 0 -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi
-    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+200+200 xwd:- pnm:- |gocr -i -`
+    TEXT=`xwd -silent -id $WINDOW_ID | convert -crop 400x300+200+200 xwd:- pnm:- |gocr -i -m 8 -d 0 -`
     if [ "${TEXT#*$1}" != "$TEXT" ]; then
       break;
     fi

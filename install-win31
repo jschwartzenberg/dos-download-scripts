@@ -53,7 +53,7 @@ type setup
 press_enter
 
 wait_for_text Windows
-
+sleep 2
 press_enter
 wait_for_text Custom
 type c
@@ -65,6 +65,8 @@ wait_for_text asterisk
 press Up Up Up Up Up Up Up Return
 wait_for_text type
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
+
+sleep 2
 
 # Display
 wait_for_text asterisk
@@ -163,7 +165,7 @@ press alt+r
 sleep 5
 type cd '\inst\win31up\win3euro'
 press Return
-wait_for_text 'C:\\INST'
+sleep 0.3
 type W31
 press underscore
 type euro

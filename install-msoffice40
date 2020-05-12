@@ -13,19 +13,10 @@ fi
 
 export dosemu__hdimage="$1/*"
 export dosemu__X_title="automated by $$"
-dosemu &
+dosemu -E '\windows\win/3 \inst\office40\disk1\setup' &
 set_window_id
 
-wait_for_text 'C:\\'
-
-type cd
-press space
-type '\inst\office40\disk1'
-press Return
-type \\windows\\win
-press space
-type setup.exe
-press Return
+sleep 3
 
 wait_for_text 'they are in'
 press space
