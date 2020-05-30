@@ -45,40 +45,38 @@ set_window_id
 
 #wait_for_text 'C:\\'
 #backslash still giving issues
-wait_for_text Welcome
+wait_for_text 'Welcome to dosemu2'
 
 type cd \\inst\\win31
 press_enter
 type setup
 press_enter
 
-wait_for_text Windows
-sleep 2
+wait_for_text 'To set up Windows now, press ENTER.'
 press_enter
-wait_for_text Custom
+wait_for_text 'To use Custom Setup, press C.'
 type c
-wait_for_text directory
+wait_for_text 'Press ENTER to continue Setup.'
 press_enter
 
 # Computer
-wait_for_text asterisk
+wait_for_text 'MS-DOS System'
+# enable APM
 press Up Up Up Up Up Up Up Return
-wait_for_text type
+wait_for_text 'To select the computer you want from the following list'
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
 
-sleep 2
-
 # Display
-wait_for_text asterisk
+wait_for_text 'VGA'
 press Up Up Up Up Up Up Return
-wait_for_text installed
+wait_for_text 'You have asked to change the type of Display to be installed.'
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down \
  Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
-wait_for_text manufacturer
+wait_for_text 'Please insert the display driver disk'
 press Home
-type \\inst\\win31drv\\video
+type '\inst\win31drv\video'
 press_enter
-wait_for_text chosen
+wait_for_text 'You have chosen to install a display driver provided'
 # 1024x768x4 small fonts - doesn't work well in dosemu
 #press Return
 # 1024x768x4 large fonts - ?
@@ -93,76 +91,76 @@ wait_for_text chosen
 press Down Down Down Down Down Down Down Down Down Down Down Return
 
 # Mouse
-wait_for_text asterisk
+wait_for_text 'Microsoft, or IBM PS/2'
 press Up Up Up Up Up Return
-wait_for_text list
+wait_for_text 'You have asked to change the type of Mouse to be installed.'
 press Down Down Down Down Down Down Down Down Down Down Down Down Down Down Down Return
-wait_for_text manufacturer
+wait_for_text 'Please insert the mouse driver disk provided'
 press Home
-type \\inst\\win31drv\\mouse
+type '\inst\win31drv\mouse'
 press_enter
-wait_for_text chosen
+wait_for_text 'You have chosen to install a mouse driver provided'
 press_enter
 
-wait_for_text asterisk
+wait_for_text 'If all the items in the list are correct, press ENTER'
 press_enter
 
 # enter your full name
-wait_for_text full
+wait_for_text_ocr full
 type User
 press alt+o
 #verify it's correct
-wait_for_text veri
+wait_for_text_ocr veri
 press alt+o
 
-wait_for_text selected
+wait_for_text_ocr selected
 press alt+o
 
 # select components
-wait_for_text groups
+wait_for_text_ocr groups
 press alt+o
 
 # Virtual Memory
-wait_for_text temp
+wait_for_text_ocr temp
 press space
 
 # update connfig.sys and autoexec.bat
-wait_for_text ENTER
+wait_for_text_ocr ENTER
 press alt+o
 
 # confirm above
-wait_for_text 'version'
+wait_for_text_ocr 'version'
 press space
 
 # choose a printer
-wait_for_text printer
+wait_for_text_ocr printer
 press Tab Tab space
 
 # search applications
-wait_for_text 'hard'
+wait_for_text_ocr 'hard'
 press alt+s
 # set name for edit
-wait_for_text ENTER
+wait_for_text_ocr ENTER
 press_enter
 
 # add all applications
-#wait_for_text hard
+#wait_for_text_ocr hard
 sleep 1
 press alt+d Return
 
 # Tutorial
-wait_for_text been
+wait_for_text_ocr been
 press alt+s
 
 # Reboot to finish
-wait_for_text prompt
+wait_for_text_ocr prompt
 press alt+r
 
 ./win31fixes "$1/c/windows"
 
 
 # install Euro symbol support
-sleep 5
+wait_for_text 'Welcome to dosemu2'
 type cd '\inst\win31up\win3euro'
 press Return
 sleep 0.3
@@ -170,11 +168,11 @@ type W31
 press underscore
 type euro
 press space
-type \\WINDOWS
+type '\WINDOWS'
 press Return
-wait_for_text any
+wait_for_text 'Press any key to continue'
 press Return
-type cd \\windows
+type 'cd \windows'
 press Return
 
 # install SB16 driver
@@ -184,37 +182,37 @@ press space
 type '\sb16\winsetup'
 press Return
 
-wait_for_text 'the Sound'
+wait_for_text_ocr 'the Sound'
 press alt+o
-wait_for_text ckup
+wait_for_text_ocr ckup
 press alt+p
-wait_for_text 'need to'
+wait_for_text_ocr 'need to'
 press space
 sleep 3
 
 # install WinG
 press Return
-wait_for_text ptions
+wait_for_text_ocr ptions
 press alt+f
 press r
-type \\inst\\win31up\\wing\\setup.exe
+type '\inst\win31up\wing\setup.exe'
 press Return
-wait_for_text pro
+wait_for_text_ocr pro
 press alt+c alt+c
-wait_for_text pro
+wait_for_text_ocr pro
 press alt+c
-wait_for_text optim
+wait_for_text_ocr optim
 press space
 
 # install V4W
-wait_for_text ptions
+wait_for_text_ocr ptions
 press alt+f
 press r
-type \\inst\\win31up\\v4w\\setup.exe
+type '\inst\win31up\v4w\setup.exe'
 press Return
-wait_for_text ideo
+wait_for_text_ocr ideo
 press alt+c
-wait_for_text complete
+wait_for_text_ocr complete
 press alt+r
 
 # install IE5
@@ -224,7 +222,7 @@ press alt+r
 #type \\inst\\win31ip\\ie5\\setup.exe
 #press Return
 #memory error
-wait_for_text ptions
+wait_for_text_ocr ptions
 press alt+f
 press x
 press space

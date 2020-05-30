@@ -22,8 +22,10 @@ fi
 
 set_window_id()
 {
+  sleep 2
   while [ -z $WINDOW_ID ]; do
     WINDOW_ID=`xdotool search --name "$$"`
+    DOSEMU_PID=`xdotool getwindowpid $WINDOW_ID`
   done
 }
 
@@ -35,9 +37,23 @@ is_dosemu_active()
   fi
 }
 
-# gocr has problems when there are different sizes/fonts on one shot so there are variants with crop to work around that
 wait_for_text()
 {
+  while true; do
+    is_dosemu_active
+
+    # dump display memory to file
+    echo dump 0xb8000 8192 /tmp/dosemu-$DOSEMU_PID.text | dosdebug $DOSEMU_PID
+    TEXT=`tr -cd '\11\12\15\40-\176' < /tmp/dosemu-$DOSEMU_PID.text`
+    if [ "${TEXT#*$1}" != "$TEXT" ]; then
+      break;
+    fi
+    done
+}
+
+# gocr has problems when there are different sizes/fonts on one shot so there are variants with crop to work around that
+wait_for_text_ocr()
+{   
   while true; do
     is_dosemu_active
 

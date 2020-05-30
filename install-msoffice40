@@ -18,33 +18,33 @@ set_window_id
 
 sleep 3
 
-wait_for_text 'they are in'
+wait_for_text_ocr 'they are in'
 press space
-wait_for_text 'already'
+wait_for_text_ocr 'already'
 press space
-wait_for_text 'you need to call'
+wait_for_text_ocr 'you need to call'
 press space
-wait_for_text 'the OK button'
+wait_for_text_ocr 'the OK button'
 press space
-wait_for_text 'the OK button'
+wait_for_text_ocr 'the OK button'
 press space
-wait_for_text 'the OK button'
+wait_for_text_ocr 'the OK button'
 press space
-wait_for_text 'the OK button'
+wait_for_text_ocr 'the OK button'
 press space
-wait_for_text 'the type'
+wait_for_text_ocr 'the type'
 press space
 # Lotus 123 help
-wait_for_text 'about'
+wait_for_text_ocr 'about'
 press alt+n
 # WordPerfect help
-wait_for_text 'tool'
+wait_for_text_ocr 'tool'
 press alt+n
-wait_for_text 'to the group'
+wait_for_text_ocr 'to the group'
 press alt+c
-wait_for_text 'that are required to run'
+wait_for_text_ocr 'that are required to run'
 press space
-wait_for_text 'ully'
+wait_for_text_ocr 'ully'
 press space
 
 
