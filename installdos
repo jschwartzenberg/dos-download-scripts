@@ -56,8 +56,7 @@ expand_files_with_extension()
   then
     for i in "$SOURCE"/*.$EXTENSION_COMPRESSED
     do
-      $MSEXPAND "$i"
-      mv "$SOURCE"/`basename "${i%.???}.$EXTENSION_CUT"` ${DRIVE_ROOT}/"${DOS_DIRECTORY}"/`basename "${i%.???}.$EXTENSION"`
+      $MSEXPAND "$i" ${DRIVE_ROOT}/"${DOS_DIRECTORY}"/$(basename "${i%.???}.$EXTENSION")`
     done
   fi
 }
