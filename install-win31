@@ -29,8 +29,10 @@ if [ ! -d /tmp/dosinst/msdos622 ]; then
 fi
 ./installdos /tmp/dosinst/msdos622/ $1/c
 
+copy_if_exists /usr/local/share/dosemu/commands/config.sys "$1"/c
 copy_if_exists /usr/local/share/dosemu/commands/c/config.sys "$1"/c
 copy_if_exists /usr/local/share/dosemu/commands/autoemu.bat "$1"/c
+copy_if_exists /usr/share/dosemu/commands/config.sys "$1"/c
 copy_if_exists /usr/share/dosemu/commands/config.sys "$1"/c
 copy_if_exists /usr/share/dosemu/commands/autoemu.bat "$1"/c
 export dosemu__hdimage="$1/*"
@@ -41,6 +43,8 @@ export dosemu__hdimage="$1/*"
 
 export dosemu__X_title="automated_by_$$"
 dosemu -T -E "xmode -title \'$dosemu__X_title\'" --Fdrive_c "$1/c" &
+# for older dosemu2 revisions
+#dosemu -T --Fdrive_c "$1/c" &
 set_window_id
 
 #wait_for_text 'C:\\'

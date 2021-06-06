@@ -56,7 +56,7 @@ expand_files_with_extension()
   then
     for i in "$SOURCE"/*.$EXTENSION_COMPRESSED
     do
-      $MSEXPAND "$i" ${DRIVE_ROOT}/"${DOS_DIRECTORY}"/$(basename "${i%.???}.$EXTENSION")`
+      $MSEXPAND "$i" ${DRIVE_ROOT}/"${DOS_DIRECTORY}"/$(basename "${i%.???}.$EXTENSION")
     done
   fi
 }
@@ -102,7 +102,7 @@ extract_7z()
 
 install_opendos_from_rpm()
 {
-  TMP_DIR=/tmp/"`basename $0`-$USER-$$"
+  TMP_DIR=/tmp/"$(basename $0)-$USER-$$"
   mkdir -p "$TMP_DIR" "${DRIVE_ROOT}"
   extract_7z $SOURCE/opendos-hdimage*.rpm "" "$TMP_DIR"
   extract_7z "$TMP_DIR"/opendos-hdimage*.cpio hdimage.od "$TMP_DIR"
