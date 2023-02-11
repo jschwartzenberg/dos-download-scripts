@@ -42,10 +42,10 @@ export dosemu__hdimage="$1/*"
 ./win31updates $1/c/inst/win31up
 
 export dosemu__X_title="automated_by_$$"
-dosemu -T -E "xmode -title \'$dosemu__X_title\'" --Fdrive_c "$1/c" &
+dosemu.bin -o "$1/boot.log" -T -E "xmode -title $dosemu__X_title" --Fdrive_c "$1/c" &
 # for older dosemu2 revisions
 #dosemu -T --Fdrive_c "$1/c" &
-set_window_id
+set_window_id $(jobs -p)
 
 #wait_for_text 'C:\\'
 #backslash still giving issues

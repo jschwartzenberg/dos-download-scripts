@@ -22,16 +22,17 @@ fi
 
 set_window_id()
 {
+  DOSEMU_PID=$1
+  echo "DOSEMU_PID = $DOSEMU_PID"
   sleep 2
   while [ -z $WINDOW_ID ]; do
-    WINDOW_ID=`xdotool search --name "$$"`
-    DOSEMU_PID=`xdotool getwindowpid $WINDOW_ID`
+    WINDOW_ID=$(xdotool search --pid "$DOSEMU_PID")
   done
 }
 
 is_dosemu_active()
 {
-  WINDOW_ID=`xdotool search --name "$$"`
+  WINDOW_ID=$(xdotool search --pid "$DOSEMU_PID")
   if [ -z $WINDOW_ID ]; then
     exit 1
   fi

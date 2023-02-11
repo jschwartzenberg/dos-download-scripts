@@ -14,13 +14,14 @@ download_file https://web.archive.org/web/20010708140540/http://www.eu.microsoft
 download_file https://archive.org/download/ftp.microsoft.com/ftp.microsoft.com.zip/ftp.microsoft.com%2FSoftlib%2FMSLFILES%2FWING10.EXE "$TMP_DIR"/wing10.exe
 
 # v4w
-download_file http://ftp.ulb.ac.be/pub/resulb/PC/Netscape/wv1160.exe "$TMP_DIR"/wv1160.exe
+#download_file http://ftp.ulb.ac.be/pub/resulb/PC/Netscape/wv1160.exe "$TMP_DIR"/wv1160.exe
+download_file http://ftp.lanet.lv/ftp/windows/www/netscape3.0/wv1160.exe "$TMP_DIR"/wv1160.exe
 
 # ie5
 # http://2ch-matome-smartphone.blog.jp/archives/1026316450.html
 # http://web.archive.org/web/20040608163954/http://download.microsoft.com/msdownload/ie5/rtw/win16/en/cab/setup.exe
 # http://web.archive.org/web/20030221021934/http://download.microsoft.com/msdownload/ie5/rtw/win16/en/cab/browser.cab
-download_file #https://web.archive.org/web/20020918054115/http://www.cintek.com/download/files/win31/ie5/ie5win31.exe "$TMP_DIR"/ie5win31.exe
+#download_file #https://web.archive.org/web/20020918054115/http://www.cintek.com/download/files/win31/ie5/ie5win31.exe "$TMP_DIR"/ie5win31.exe
 
 extract_7z "$TMP_DIR"/wing10.exe "" "$DESTINATION"/wing
 extract_7z "$TMP_DIR"/wv1160.exe "" "$DESTINATION"/v4w
